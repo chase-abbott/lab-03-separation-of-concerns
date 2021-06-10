@@ -1,7 +1,5 @@
-const pool = require('pool');
+const pool = require('../lib/utils/pool');
 
-// 1. define the shape of our data
-// 2. define methods to access that data (CRUD)
 class Order {
   id;
   quantityOfItems;
@@ -11,16 +9,43 @@ class Order {
     this.quantityOfItems = row.quantity_of_items;
   }
 
-  // static method
-  // instance method
-  static async insert(quantityOfItems) {
+  static async insertOrder(quantityOfItems) {
     const { rows } = await pool.query(
       'INSERT INTO orders (quantity_of_items) VALUES ($1) RETURNING *',
       [quantityOfItems]
     );
 
-    // rows = [{ id: '1', quantity_of_items: 10 }]
-    // { id: '1', quantityOfItems: 10 }
+    return new Order(rows[0]);
+  }
+
+  static async selectOrders(){
+    const { rows } = await pool.query(
+      'SELECT * FROM orders'
+    );
+
+    return new Order(rows);
+  }
+
+  static async updateOrder(id, order){
+    const { rows } = await pool.query(
+      `UPDATE orders
+       SET quantity_of_items = $1
+       WHERE id = $2
+       RETURNING *`,
+      [order.quantityOfItems, id]
+    );
+
+    return new Order(rows[0]);
+  }
+
+  static async deleteOrder(id){
+    const { rows } = await pool.query(
+      `DELETE FROM orders
+      WHERE id = $1
+      RETURNING *`,
+      [id]
+    );
+
     return new Order(rows[0]);
   }
 }
