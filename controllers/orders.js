@@ -5,7 +5,7 @@ const Order = require('../models/Order');
 module.exports = Router() // app.post(....)
   .post('/api/v1/orders', async (req, res) => {
     try {
-      const order = await Order.insertOrder(req.params.quantity);
+      const order = await Order.insertOrder(req.body); 
       res.send(order);
     } catch(err) {
       res.status(500).send(err);
@@ -20,10 +20,19 @@ module.exports = Router() // app.post(....)
       res.status(500).send(err);
     }
   })
+  .get('/api/v1/orders/:id', async (req, res) => {
+    try {
+      const order = await Order.selectOrderById(req.params.id);
+      res.send(order);
+    }
+    catch(err){
+      res.status(500).send(err);
+    }
+  })
   .put('/api/v1/orders/:id', async (req, res) => {
     try {
-      const matchingOrder = req.body;
-      const order = await Order.updateOrder(req.params.id, matchingOrder);
+      const updatedOrder = req.body;
+      const order = await Order.updateOrder(req.params.id, updatedOrder);
       res.send(order);
     }
     catch(err){

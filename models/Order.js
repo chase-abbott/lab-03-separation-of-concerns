@@ -22,8 +22,17 @@ class Order {
     const { rows } = await pool.query(
       'SELECT * FROM orders'
     );
+    
+    return rows.map(order => new Order(order));
+  }
 
-    return new Order(rows);
+  static async selectOrderById(id){
+    const { rows } = await pool.query(
+      `SELECT * FROM orders 
+       WHERE id = $1`,
+      [id]
+    );
+    return new Order(rows[0]);
   }
 
   static async updateOrder(id, order){
