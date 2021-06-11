@@ -4,7 +4,7 @@ const setup = require('../data/setup');
 const request = require('supertest');
 const app = require('../lib/app');
 
-describe('separation-of-concerns routes', () => {
+describe('separation-of-concerns bird routes', () => {
   beforeEach(() => {
     return setup(pool);
   });
