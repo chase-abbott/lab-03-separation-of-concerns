@@ -24,6 +24,14 @@ class Dog {
     return rows.map(dog => new Dog(dog));
   }
 
+  static async selectDogById(id){
+    const { rows } = await pool.query(`
+    SELECT * FROM dogs
+    WHERE id = $1`
+    , [id]);
+    return new Dog(rows[0]);
+  }
+
   static async updateDog(id, { numberOfDogs }) {
     const { rows } = await pool.query(
       `UPDATE dogs

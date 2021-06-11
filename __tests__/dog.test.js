@@ -27,6 +27,17 @@ describe('separation-of-concerns dog routes', () => {
     expect(getResponse.body).toEqual([{ id: '1', numberOfDogs: 5 }]);
   });
 
+  it('gets a specifc dog from the database', async () => {
+    const { body } = await request(app)
+      .post('/api/v1/dogs')
+      .send({ numberOfDogs: 5 });
+
+    const getResponse = await request(app)
+      .get(`/api/v1/dogs/${body.id}`);
+
+    expect(getResponse.body).toEqual({ id: '1', numberOfDogs: 5 });
+  });
+
   it('updates a dog from the dog table', async () => {
     const { body } = await request(app)
       .post('/api/v1/dogs')
