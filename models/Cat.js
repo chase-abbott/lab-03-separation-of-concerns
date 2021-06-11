@@ -25,6 +25,26 @@ class Cat {
 
     return rows.map(cat => new Cat(cat));
   }
+
+  static async updateCat(id, { numberOfCats }){
+    const { rows } = await pool.query(`
+    UPDATE cats
+    SET number_of_cats = $1
+    WHERE id = $2
+    RETURNING *`
+    , [numberOfCats, id]);
+    return new Cat(rows[0]);
+  }
+
+  static async deleteCat(id){
+    const { rows } = await pool.query(`
+    DELETE FROM cats
+    WHERE id = $1
+    RETURNING *`
+    , [id]);
+
+    return new Cat(rows[0]);
+  }
 }
 
 module.exports = Cat;
