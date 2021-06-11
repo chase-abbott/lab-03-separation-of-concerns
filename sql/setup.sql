@@ -1,6 +1,31 @@
-DROP TABLE IF EXISTS orders;
+DROP TABLE IF EXISTS orders, dogs, cats, frogs, lizards, birds;
 
 CREATE TABLE orders (
   id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  quantity_of_items INTEGER CHECK (quantity > 0)
+  quantity_of_items INTEGER
+);
+
+CREATE TABLE dogs (
+  id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  number_of_dogs INTEGER
+);
+
+CREATE TABLE cats (
+  id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  number_of_cats INTEGER
+);
+
+CREATE TABLE frogs (
+  id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  number_of_frogs INTEGER
+);
+
+CREATE TABLE lizards (
+  id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  number_of_lizards INTEGER
+);
+
+CREATE TABLE birds (
+  id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  number_of_birds INTEGER
 );
