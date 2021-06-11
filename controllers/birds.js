@@ -19,6 +19,15 @@ module.exports = Router()
     catch(err) {
       res.status(500).send(err);
     }})
+  .get('/api/v1/birds/:id', async (req, res) => {
+    try {
+      const birds = await Bird.selectBirdById(req.params.id);
+      res.send(birds);
+    }
+    catch(err){
+      res.status(500).send(err);
+    }
+  })
   .put('/api/v1/birds/:id', async (req, res) => {
     try {
       const bird = await Bird.updateBird(req.params.id, req.body);

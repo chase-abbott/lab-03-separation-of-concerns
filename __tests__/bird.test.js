@@ -24,6 +24,13 @@ describe('separation-of-concerns bird routes', () => {
     expect(response.body).toEqual([{ id: '1', numberOfBirds: 1 }]);
   });
 
+  it('gets a specific bird from the database', async () => {
+    const { body } = await request(app).post('/api/v1/birds').send({ numberOfBirds: 1 });
+    const response = await request(app)
+      .get(`/api/v1/birds/${body.id}`);
+    expect(response.body).toEqual({ id: '1', numberOfBirds: 1 });
+  });
+
   it('updates a bird', async () => {
     const bird = await request(app).post('/api/v1/birds').send({ numberOfBirds: 1 });
     
