@@ -28,6 +28,17 @@ describe('separation-of-concerns cat routes', () => {
     expect(getResponse.body).toEqual([{ id: '1', numberOfCats: 5 }]);
   });
 
+  it('gets a specific cat from the database', async () => {
+    const { body } = await request(app)
+      .post('/api/v1/cats')
+      .send({ numberOfCats: 5 });
+
+    const getResponse = await request(app)
+      .get(`/api/v1/cats/${body.id}`);
+    
+    expect(getResponse.body).toEqual({ id: '1', numberOfCats: 5 });
+  });
+
   it('updates a cat from the database', async () => {
     const { body } = await request(app)
       .post('/api/v1/cats')

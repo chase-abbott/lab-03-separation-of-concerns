@@ -26,6 +26,15 @@ class Cat {
     return rows.map(cat => new Cat(cat));
   }
 
+  static async selectCatById(id){
+    const { rows } = await pool.query(`
+    SELECT * FROM cats
+    WHERE id = $1`
+    , [id]);
+
+    return new Cat(rows[0]);
+  }
+
   static async updateCat(id, { numberOfCats }){
     const { rows } = await pool.query(`
     UPDATE cats
